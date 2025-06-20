@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import { SheetsController } from './controllers/SheetsController';
 import { ConfigController } from './controllers/ConfigController';
@@ -848,7 +847,182 @@ app.get('/api-docs.json', (req: Request, res: Response) => {
   res.json(swaggerSpec);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Página customizada de documentação que funciona no Vercel
+app.get('/api-docs', (req: Request, res: Response) => {
+  const html = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Backend API - Documentação</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { color: #1976d2; border-bottom: 3px solid #1976d2; padding-bottom: 10px; }
+        h2 { color: #424242; margin-top: 30px; }
+        .endpoint { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #4caf50; }
+        .method { font-weight: bold; color: white; padding: 4px 8px; border-radius: 3px; margin-right: 10px; }
+        .get { background: #4caf50; }
+        .post { background: #2196f3; }
+        .put { background: #ff9800; }
+        .delete { background: #f44336; }
+        .description { color: #666; margin-top: 5px; }
+        .auth-required { background: #fff3cd; border-color: #ffc107; color: #856404; padding: 5px 10px; border-radius: 3px; font-size: 12px; }
+        .important { background: #e3f2fd; padding: 15px; border-radius: 5px; border-left: 4px solid #2196f3; margin: 20px 0; }
+        .button { display: inline-block; background: #1976d2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin: 5px; }
+        .button:hover { background: #1565c0; }
+        .swagger-link { background: #85ea2d; color: black; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Dashboard Backend API</h1>
+        
+        <div class="important">
+            <strong>📋 Ferramentas para testar a API:</strong><br>
+            <a href="/api-docs.json" class="button swagger-link" target="_blank">📄 Swagger JSON</a>
+            <a href="https://editor.swagger.io" class="button" target="_blank">🌐 Swagger Editor</a>
+            <a href="https://www.postman.com" class="button" target="_blank">📮 Postman</a>
+        </div>
+
+        <p><strong>Base URL:</strong> <code>https://backend-mb2ff2h5i-luandevuxs-projects.vercel.app</code></p>
+        
+        <h2>🔐 Autenticação</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/auth/register</code>
+            <div class="description">Cadastrar novo usuário</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/auth/login</code>
+            <div class="description">Fazer login e obter token JWT</div>
+        </div>
+        
+        <h2>⚙️ Configuração</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/config/init</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Inicializar planilha de configuração</div>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/config/init</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Obter configuração inicial</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/config/redmine</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Configurar conexão com Redmine</div>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/config/redmine</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Obter configuração Redmine</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/config/redmine/test</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Testar conexão com Redmine</div>
+        </div>
+        
+        <h2>📊 Google Sheets</h2>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/sheets/{spreadsheetId}/abas</code>
+            <div class="description">Listar abas da planilha</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/sheets/criar-aba</code>
+            <div class="description">Criar nova aba na planilha</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/sheets/salvar-dados</code>
+            <div class="description">Salvar dados na planilha</div>
+        </div>
+        
+        <h2>🏷️ Filtros</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/filtros</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Criar filtro personalizado</div>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/filtros</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Listar filtros do usuário</div>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/filtros/{filtroId}/detalhes</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Obter detalhes de um filtro</div>
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span><code>/api/filtros/{filtroId}</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Atualizar filtro existente</div>
+        </div>
+        <div class="endpoint">
+            <span class="method delete">DELETE</span><code>/api/filtros/{filtroId}</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Excluir filtro</div>
+        </div>
+        
+        <h2>📤 Exportação</h2>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/exportacoes</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Histórico de exportações</div>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/export/por-filtro/{filtroId}</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Exportar usando filtro salvo</div>
+        </div>
+        
+        <h2>⏰ Jobs Agendados</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span><code>/api/jobs</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Criar job agendado</div>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span><code>/api/jobs</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Listar jobs do usuário</div>
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span><code>/api/jobs/{jobId}</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Atualizar job existente</div>
+        </div>
+        <div class="endpoint">
+            <span class="method delete">DELETE</span><code>/api/jobs/{jobId}</code>
+            <span class="auth-required">🔒 Requer Auth</span>
+            <div class="description">Cancelar job</div>
+        </div>
+        
+        <div class="important">
+            <strong>🔑 Como usar autenticação:</strong><br>
+            1. Faça POST em <code>/api/auth/login</code> com email e senha<br>
+            2. Copie o token JWT da resposta<br>
+            3. Adicione o header: <code>Authorization: Bearer SEU_TOKEN_AQUI</code>
+        </div>
+        
+        <div class="important">
+            <strong>💡 Exemplo de uso:</strong><br>
+            1. <strong>Login:</strong> POST <code>/api/auth/login</code><br>
+            2. <strong>Configurar:</strong> POST <code>/api/config/init</code><br>
+            3. <strong>Redmine:</strong> POST <code>/api/config/redmine</code><br>
+            4. <strong>Filtros:</strong> POST <code>/api/filtros</code><br>
+            5. <strong>Exportar:</strong> POST <code>/api/export/por-filtro/{id}</code>
+        </div>
+    </div>
+</body>
+</html>`;
+  
+  res.setHeader('Content-Type', 'text/html');
+  res.send(html);
+});
 
 // Rotas organizadas por recurso com rate limiting específico
 app.get('/api/sheets/:spreadsheetId/abas', sheetsRateLimit, (req, res) => 
