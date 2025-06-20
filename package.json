@@ -2,7 +2,8 @@
   "name": "dashboard-backend",
   "version": "1.0.0",
   "description": "Node.js backend to receive data from frontend and persist to Google Sheets.",
-  "main": "dist/index.js",  "scripts": {
+  "main": "dist/index.js",
+  "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "ts-node-dev --respawn src/index.ts",
@@ -17,17 +18,21 @@
     "lint:fix": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
+    "@types/swagger-ui-express": "^4.1.8",
     "agenda": "^5.0.0",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
     "cron-parser": "^5.3.0",
-    "dotenv": "^16.5.0",    "express": "^4.18.2",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
     "googleapis": "^133.0.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.1",
     "node-cron": "^4.1.0",
-    "swagger-jsdoc": "^6.2.8"
-  },"devDependencies": {
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/jest": "^30.0.0",
@@ -36,7 +41,8 @@
     "@types/node": "^24.0.3",
     "@types/node-cron": "^3.0.11",
     "@types/supertest": "^6.0.3",
-    "@types/swagger-jsdoc": "^6.0.4",    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.45.0",
     "jest": "^30.0.2",
