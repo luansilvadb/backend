@@ -842,6 +842,12 @@ const swaggerSpec = {
   }
 };
 
+// Endpoint para servir apenas o JSON do Swagger (para usar em editores externos)
+app.get('/api-docs.json', (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.json(swaggerSpec);
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rotas organizadas por recurso com rate limiting específico
@@ -1119,9 +1125,13 @@ app.get('/', (req: Request, res: Response) => {
       <li><code>GET /api/sheets/{id}/abas</code> - Lista abas</li>
       <li><code>POST /api/sheets/criar-aba</code> - Cria nova aba</li>
       <li><code>POST /api/sheets/salvar-dados</code> - Salva dados</li>    </ul>
-    
-    <h2>🔗 Links</h2>
-    <p><a href="/api-docs">📖 Documentação Swagger completa</a></p>
+      <h2>🔗 Links</h2>
+    <p><a href="/api-docs">📖 Documentação Swagger interativa</a></p>
+    <p><strong>Alternativa se o Swagger não carregar:</strong></p>
+    <ul>
+      <li>📄 <a href="/api-docs.json">Swagger JSON</a> - Cole no <a href="https://editor.swagger.io" target="_blank">Swagger Editor</a></li>
+      <li>🌐 Use Postman, Insomnia ou outra ferramenta de API</li>
+    </ul>
       <h2>✅ Boas Práticas Implementadas</h2>
     <ul>
       <li>Separação de responsabilidades (MVC)</li>
