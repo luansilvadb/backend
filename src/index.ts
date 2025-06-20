@@ -34,7 +34,10 @@ const swaggerSpec = {
     version: '1.0.0',
     description: 'API REST para integração com Google Sheets e Redmine seguindo boas práticas',
   },
-  servers: [{ url: 'http://localhost:3000' }],  components: {
+  servers: [
+    { url: 'https://backend-mb2ff2h5i-luandevuxs-projects.vercel.app', description: 'Production server' },
+    { url: 'http://localhost:3000', description: 'Development server' }
+  ],  components: {
     securitySchemes: {
       bearerAuth: {
         type: 'http',
