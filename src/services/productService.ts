@@ -361,7 +361,7 @@ export class ProductService {
 
     // Filtrar produtos com estoque baixo
     const lowStockProducts = products.filter(
-      (product) =>
+      (product: { inventory: Array<{ quantity: number; minStock: number }> }) =>
         Array.isArray(product.inventory) &&
         product.inventory[0] &&
         typeof product.inventory[0].quantity === 'number' &&
@@ -401,7 +401,7 @@ export class ProductService {
           isActive: true
         }
       });
-      categoryIds = [...categoryIds, ...subcategories.map(cat => cat.id)];
+      categoryIds = [...categoryIds, ...subcategories.map((cat: { id: string }) => cat.id)];
     }
 
     const products = await prisma.product.findMany({

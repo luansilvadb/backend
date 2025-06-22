@@ -200,7 +200,7 @@ export class AuditController {
       ]);
 
       // Buscar informações dos usuários mais ativos
-      const userIds = userActivity.map(u => u.userId);
+      const userIds = userActivity.map((u: { userId: string }) => u.userId);
       const users = await prisma.user.findMany({
         where: {
           id: { in: userIds },
@@ -214,8 +214,8 @@ export class AuditController {
         }
       });
 
-      const userActivityWithDetails = userActivity.map(activity => {
-        const user = users.find(u => u.id === activity.userId);
+      const userActivityWithDetails = userActivity.map((activity: { userId: string; _count: { userId: number } }) => {
+        const user = users.find((u: { id: string }) => u.id === activity.userId);
         return {
           user,
           count: activity._count.userId
@@ -231,7 +231,7 @@ export class AuditController {
             failedActions,
             successRate: totalLogs > 0 ? ((successfulActions / totalLogs) * 100).toFixed(2) : '0'
           },
-          actionsByType: actionsByType.map(action => ({
+          actionsByType: actionsByType.map((action: { action: string; _count: { action: number } }) => ({
             action: action.action,
             count: action._count.action
           })),
@@ -304,7 +304,7 @@ export class AuditController {
       if (format === 'csv') {
         // Converter para CSV
         const csvHeader = 'Data,Usuario,Email,Acao,Recurso,Sucesso,IP,User Agent,Detalhes\n';
-        const csvRows = logs.map(log => {
+        const csvRows = logs.map((log: any) => {
           const details = log.details ? JSON.stringify(log.details).replace(/"/g, '""') : '';
           return [
             log.createdAt.toISOString(),

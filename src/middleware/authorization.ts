@@ -84,7 +84,7 @@ class AuditLogger {
             timestamp: attempt.timestamp.toISOString()
           }
         }
-      }).catch(error => {
+      }).catch((error: unknown) => {
         console.error('Failed to save audit log:', error);
       });
     } catch (error) {
