@@ -21,7 +21,7 @@ export class AuthService {
     const { email, password, tenantSlug } = data;
 
     // Buscar tenant
-    const tenant = await prisma.tenant.findUnique({
+    const tenant = await prisma.tenant.findFirst({
       where: { slug: tenantSlug, isActive: true }
     });
 
@@ -30,13 +30,13 @@ export class AuthService {
     }
 
     // Buscar usuário
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
-        email_tenantId: {
-          email,
-          tenantId: tenant.id
-        },
-        isActive: true
+        AND: [
+          { email },
+          { tenantId: tenant.id },
+          { isActive: true }
+        ]
       },
       include: { tenant: true }
     });
@@ -145,8 +145,8 @@ export class AuthService {
       }
 
       // Verificar se a sessão ainda está ativa
-      const session = await prisma.userSession.findUnique({
-        where: { 
+      const session = await prisma.userSession.findFirst({
+        where: {
           id: decoded.sessionId,
           isActive: true,
           expiresAt: { gt: new Date() }
@@ -158,7 +158,7 @@ export class AuthService {
         }
       });
 
-      if (!session || !session.user.isActive || !session.user.tenant.isActive) {
+      if (!session || !session.user || !session.user.isActive || !session.user.tenant || !session.user.tenant.isActive) {
         throw new Error('Sessão inválida ou expirada');
       }
 
@@ -218,8 +218,8 @@ export class AuthService {
   }
 
   static async validateSession(sessionId: string): Promise<boolean> {
-    const session = await prisma.userSession.findUnique({
-      where: { 
+    const session = await prisma.userSession.findFirst({
+      where: {
         id: sessionId,
         isActive: true,
         expiresAt: { gt: new Date() }
@@ -370,7 +370,7 @@ export class AuthService {
     const { email, name, password, tenantSlug, inviteCode } = data;
 
     // Verificar se o tenant existe e está ativo
-    const tenant = await prisma.tenant.findUnique({
+    const tenant = await prisma.tenant.findFirst({
       where: { slug: tenantSlug, isActive: true }
     });
 
