@@ -1,0 +1,52 @@
+newman
+
+Estoque
+
+→ Listar Estoque
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 21ms]
+  GET http://localhost:3000/api/inventory [429 Too Many Requests, 1.14kB, 3ms]
+
+→ Itens com Estoque Baixo
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/inventory/low-stock [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Movimentações de Estoque
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/inventory/movements [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Registrar Movimentação
+  POST http://localhost:3000/api/auth/login   POST http://localhost:3000/api/products [429 Too Many Requests, 1.14kB, 3ms]
+[429 Too Many Requests, 1.14kB, 5ms]
+  POST http://localhost:3000/api/inventory/movements [429 Too Many Requests, 1.14kB, 3ms]
+
+→ Detalhar Estoque por Produto
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/inventory/:productId [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Ajustar Estoque
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  POST http://localhost:3000/api/inventory/:productId/adjust [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Alertas de Estoque
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/inventory/alerts [429 Too Many Requests, 1.14kB, 2ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              15 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               7 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 177ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 1.22kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 2ms, max: 21ms, s.d.: 4ms] │
+└─────────────────────────────────────────────────────────────┘

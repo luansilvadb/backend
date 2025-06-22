@@ -1,0 +1,39 @@
+newman
+
+Auditoria
+
+→ Listar Logs de Auditoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 20ms]
+  GET http://localhost:3000/api/audit/logs [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Estatísticas de Auditoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/audit/stats [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Exportar Logs de Auditoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 1ms]
+  GET http://localhost:3000/api/audit/export [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Limpar Logs Antigos
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  POST http://localhost:3000/api/audit/cleanup [429 Too Many Requests, 1.14kB, 2ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │               8 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               4 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 103ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 648B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 4ms [min: 1ms, max: 20ms, s.d.: 6ms] │
+└─────────────────────────────────────────────────────────────┘

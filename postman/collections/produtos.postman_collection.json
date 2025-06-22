@@ -1,0 +1,288 @@
+{
+  "info": {
+    "name": "PDV Multitenant API - Produtos",
+    "_postman_id": "e2e-collection-produtos",
+    "description": "Coleção Postman apenas com endpoints de produtos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Produtos",
+      "item": [
+        {
+          "name": "Listar Produtos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna lista de produtos\",function(){pm.expect(data).to.be.an(\"array\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          }
+        },
+        {
+          "name": "Criar Produto",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "if (!pm.environment.get('token')) {",
+                  "  pm.sendRequest({",
+                  "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+                  "    method: 'POST',",
+                  "    header: { 'Content-Type': 'application/json' },",
+                  "    body: {",
+                  "      mode: 'raw',",
+                  "      raw: JSON.stringify({",
+                  "        email: pm.environment.get('email'),",
+                  "        password: pm.environment.get('password'),",
+                  "        tenantSlug: pm.environment.get('tenantSlug')",
+                  "      })",
+                  "    }",
+                  "  }, function (err, res) {",
+                  "    if (!err && res.code === 200) {",
+                  "      var data = res.json();",
+                  "      pm.environment.set('token', data.token);",
+                  "      pm.environment.set('refreshToken', data.refreshToken);",
+                  "    }",
+                  "  });",
+                  "}",
+                  "// Garante que existe uma categoriaId válida",
+                  "if (!pm.environment.get('categoryId')) {",
+                  "  pm.sendRequest({",
+                  "    url: pm.environment.get('baseUrl') + '/api/categories',",
+                  "    method: 'POST',",
+                  "    header: {",
+                  "      'Content-Type': 'application/json',",
+                  "      'Authorization': 'Bearer ' + pm.environment.get('token')",
+                  "    },",
+                  "    body: {",
+                  "      mode: 'raw',",
+                  "      raw: JSON.stringify({ name: 'Categoria Produto', description: 'Categoria para produto' })",
+                  "    }",
+                  "  }, function (err, res) {",
+                  "    if (!err && res.code === 201) {",
+                  "      var data = res.json();",
+                  "      pm.environment.set('categoryId', data.id);",
+                  "    }",
+                  "  });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 201 Created\",function(){pm.response.to.have.status(201);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna ID do produto criado\",function(){pm.expect(data).to.have.property(\"id\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Produto Teste\",\n  \"sku\": \"SKU123\",\n  \"cost\": 10.5,\n  \"unit\": \"UNIT\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"initialStock\": 100\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          }
+        },
+        {
+          "name": "Buscar Produto por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna produto com ID\",function(){pm.expect(data).to.have.property(\"id\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Buscar Produto por SKU",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna produto com SKU\",function(){pm.expect(data).to.have.property(\"sku\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/sku/{{sku}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "sku", "{{sku}}"] }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna produto com barcode\",function(){pm.expect(data).to.have.property(\"barcode\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/barcode/{{barcode}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "barcode", "{{barcode}}"] }
+          }
+        },
+        {
+          "name": "Listar Unidades de Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/units", "host": ["{{baseUrl}}"], "path": ["api", "products", "units"] }
+          }
+        },
+        {
+          "name": "Listar Produtos com Estoque Baixo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna lista de produtos com estoque baixo\",function(){pm.expect(data).to.be.an(\"array\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/low-stock", "host": ["{{baseUrl}}"], "path": ["api", "products", "low-stock"] }
+          }
+        },
+        {
+          "name": "Atualizar Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna produto atualizado\",function(){pm.expect(data).to.have.property(\"id\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Produto Atualizado\",\n  \"sku\": \"SKU123\",\n  \"cost\": 12.0,\n  \"unit\": \"UNIT\",\n  \"categoryId\": \"{{categoryId}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Reativar Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Mensagem de sucesso\",function(){pm.expect(data).to.have.property(\"message\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}/reactivate", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}", "reactivate"] }
+          }
+        },
+        {
+          "name": "Excluir Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 204 No Content\",function(){pm.response.to.have.status(204);});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          }
+        }
+      ]
+    }
+  ]
+}

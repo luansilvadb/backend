@@ -1,0 +1,291 @@
+{
+  "info": {
+    "name": "PDV Multitenant API - Auth",
+    "_postman_id": "e2e-collection-auth",
+    "description": "Coleção Postman apenas com endpoints de autenticação e usuários.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna token JWT\",function(){pm.expect(data).to.have.property(\"token\");});",
+                  "pm.test(\"Retorna refreshToken\",function(){pm.expect(data).to.have.property(\"refreshToken\");});",
+                  "if(data&&data.token){pm.environment.set('token',data.token);}",
+                  "if(data&&data.refreshToken){pm.environment.set('refreshToken',data.refreshToken);}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"tenantSlug\": \"{{tenantSlug}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna novo token JWT\",function(){pm.expect(data).to.have.property(\"token\");});",
+                  "pm.test(\"Retorna novo refreshToken\",function(){pm.expect(data).to.have.property(\"refreshToken\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/refresh", "host": ["{{baseUrl}}"], "path": ["api", "auth", "refresh"] }
+          }
+        },
+        {
+          "name": "Registrar Usuário",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 201 Created\",function(){pm.response.to.have.status(201);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna ID criado\",function(){pm.expect(data).to.have.property(\"id\");});",
+                  "pm.test(\"Retorna email cadastrado\",function(){pm.expect(data).to.have.property(\"email\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"novo+{{$timestamp}}@teste.com\",\n  \"password\": \"senha123\",\n  \"name\": \"Novo Usuário\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Registrar Tenant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 201 Created\",function(){pm.response.to.have.status(201);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna ID do tenant criado\",function(){pm.expect(data).to.have.property(\"tenantId\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"tenant+{{$timestamp}}@teste.com\",\n  \"password\": \"senha123\",\n  \"tenantName\": \"Tenant Teste {{ $timestamp }}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register-tenant", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register-tenant"] }
+          }
+        },
+        {
+          "name": "Perfil do Usuário",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna dados do usuário\",function(){pm.expect(data).to.have.property(\"email\");pm.expect(data).to.have.property(\"name\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "profile"] }
+          }
+        },
+        {
+          "name": "Alterar Senha",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Mensagem de sucesso\",function(){pm.expect(data).to.have.property(\"message\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"{{password}}\",\n  \"newPassword\": \"novaSenha123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/change-password", "host": ["{{baseUrl}}"], "path": ["api", "auth", "change-password"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Mensagem de logout\",function(){pm.expect(data).to.have.property(\"message\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/logout", "host": ["{{baseUrl}}"], "path": ["api", "auth", "logout"] }
+          }
+        },
+        {
+          "name": "Logout de Todas as Sessões",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Mensagem de logout\",function(){pm.expect(data).to.have.property(\"message\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/logout-all", "host": ["{{baseUrl}}"], "path": ["api", "auth", "logout-all"] }
+          }
+        },
+        {
+          "name": "Listar Sessões",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 200 OK\",function(){pm.response.to.have.status(200);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna lista de sessões\",function(){pm.expect(data).to.be.an(\"array\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/sessions", "host": ["{{baseUrl}}"], "path": ["api", "auth", "sessions"] }
+          }
+        },
+        {
+          "name": "Revogar Sessão",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 204 No Content\",function(){pm.response.to.have.status(204);});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/sessions/{{sessionId}}", "host": ["{{baseUrl}}"], "path": ["api", "auth", "sessions", "{{sessionId}}"] }
+          }
+        },
+        {
+          "name": "Criar Usuário (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Resposta JSON válida\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n    try {\n        JSON.parse(pm.response.text());\n    } catch (e) {\n        pm.expect.fail(\"Resposta não é JSON válido ou API está offline.\");\n    }\n});",
+                  "pm.test(\"Status 201 Created\",function(){pm.response.to.have.status(201);});",
+                  "var data=pm.response.json();",
+                  "pm.test(\"Retorna ID criado\",function(){pm.expect(data).to.have.property(\"id\");});",
+                  "pm.test(\"Retorna email cadastrado\",function(){pm.expect(data).to.have.property(\"email\");});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin+{{$timestamp}}@teste.com\",\n  \"password\": \"senha123\",\n  \"name\": \"Usuário Admin\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/users", "host": ["{{baseUrl}}"], "path": ["api", "auth", "users"] }
+          }
+        }
+      ]
+    }
+  ]
+}

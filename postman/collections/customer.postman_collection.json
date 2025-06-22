@@ -1,0 +1,259 @@
+{
+  "info": {
+    "name": "Clientes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Endpoints de gestão de clientes"
+  },
+  "item": [
+    {
+      "name": "Criar Cliente",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api", "customers"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cliente Teste\",\n  \"email\": \"cliente@teste.com\",\n  \"cpfCnpj\": \"12345678901\",\n  \"phone\": \"11999999999\"\n}" }
+      }
+    },
+    {
+      "name": "Listar Clientes",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api", "customers"] }
+      }
+    },
+    {
+      "name": "Detalhar Cliente",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers/:id", "host": ["{{baseUrl}}"], "path": ["api", "customers", ":id"] }
+      }
+    },
+    {
+      "name": "Atualizar Cliente",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers/:id", "host": ["{{baseUrl}}"], "path": ["api", "customers", ":id"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cliente Atualizado\",\n  \"email\": \"cliente@teste.com\",\n  \"cpfCnpj\": \"12345678901\",\n  \"phone\": \"11999999999\"\n}" }
+      }
+    },
+    {
+      "name": "Excluir Cliente",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers/:id", "host": ["{{baseUrl}}"], "path": ["api", "customers", ":id"] }
+      }
+    },
+    {
+      "name": "Histórico de Compras do Cliente",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/customers/:id/sales", "host": ["{{baseUrl}}"], "path": ["api", "customers", ":id", "sales"] }
+      }
+    }
+  ]
+}

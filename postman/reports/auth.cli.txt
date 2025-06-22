@@ -1,0 +1,220 @@
+newman
+
+PDV Multitenant API - Auth
+
+□ Auth
+└ Login
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 20ms]
+  √  Resposta JSON válida
+  1. Status 200 OK
+  2. Retorna token JWT
+  3. Retorna refreshToken
+
+└ Refresh Token
+  POST http://localhost:3000/api/auth/refresh [429 Too Many Requests, 1.14kB, 3ms]
+  √  Resposta JSON válida
+  4. Status 200 OK
+  5. Retorna novo token JWT
+  6. Retorna novo refreshToken
+
+└ Registrar Usuário
+  POST http://localhost:3000/api/auth/register [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+  7. Status 201 Created
+  8. Retorna ID criado
+  9. Retorna email cadastrado
+
+└ Registrar Tenant
+  POST http://localhost:3000/api/auth/register-tenant [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+ 10. Status 201 Created
+ 11. Retorna ID do tenant criado
+
+└ Perfil do Usuário
+  GET http://localhost:3000/api/auth/profile [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+ 12. Status 200 OK
+ 13. Retorna dados do usuário
+
+└ Alterar Senha
+  POST http://localhost:3000/api/auth/change-password [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+ 14. Status 200 OK
+ 15. Mensagem de sucesso
+
+└ Logout
+  POST http://localhost:3000/api/auth/logout [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+ 16. Status 200 OK
+ 17. Mensagem de logout
+
+└ Logout de Todas as Sessões
+  POST http://localhost:3000/api/auth/logout-all [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+ 18. Status 200 OK
+ 19. Mensagem de logout
+
+└ Listar Sessões
+  GET http://localhost:3000/api/auth/sessions [429 Too Many Requests, 1.14kB, 3ms]
+  √  Resposta JSON válida
+ 20. Status 200 OK
+ 21. Retorna lista de sessões
+
+└ Revogar Sessão
+  DELETE http://localhost:3000/api/auth/sessions/{{sessionId}} [429 Too Many Requests, 1.14kB, 1ms]
+  √  Resposta JSON válida
+ 22. Status 204 No Content
+
+└ Criar Usuário (Admin)
+  POST http://localhost:3000/api/auth/users [429 Too Many Requests, 1.14kB, 1ms]
+  √  Resposta JSON válida
+ 23. Status 201 Created
+ 24. Retorna ID criado
+ 25. Retorna email cadastrado
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              11 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              11 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              36 │              25 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 232ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 891B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 20ms, s.d.: 5ms] │
+└─────────────────────────────────────────────────────────────┘
+
+[31m   # [39m[31m failure        [39m[31m detail                                                            [39m
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 01.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Login"                                             
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 02.  AssertionError  Retorna token JWT                                                 
+                      expected { success: false, …(1) } to have property 'token'        
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Login"                                             
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 03.  AssertionError  Retorna refreshToken                                              
+                      expected { success: false, …(1) } to have property 'refreshToken' 
+                      at assertion:3 in test-script                                     
+                      inside "Auth / Login"                                             
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 04.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Refresh Token"                                     
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 05.  AssertionError  Retorna novo token JWT                                            
+                      expected { success: false, …(1) } to have property 'token'        
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Refresh Token"                                     
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 06.  AssertionError  Retorna novo refreshToken                                         
+                      expected { success: false, …(1) } to have property 'refreshToken' 
+                      at assertion:3 in test-script                                     
+                      inside "Auth / Refresh Token"                                     
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 07.  AssertionError  Status 201 Created                                                
+                      expected response to have status code 201 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Registrar Usuário"                                 
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 08.  AssertionError  Retorna ID criado                                                 
+                      expected { success: false, …(1) } to have property 'id'           
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Registrar Usuário"                                 
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 09.  AssertionError  Retorna email cadastrado                                          
+                      expected { success: false, …(1) } to have property 'email'        
+                      at assertion:3 in test-script                                     
+                      inside "Auth / Registrar Usuário"                                 
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 10.  AssertionError  Status 201 Created                                                
+                      expected response to have status code 201 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Registrar Tenant"                                  
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 11.  AssertionError  Retorna ID do tenant criado                                       
+                      expected { success: false, …(1) } to have property 'tenantId'     
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Registrar Tenant"                                  
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 12.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Perfil do Usuário"                                 
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 13.  AssertionError  Retorna dados do usuário                                          
+                      expected { success: false, …(1) } to have property 'email'        
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Perfil do Usuário"                                 
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 14.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Alterar Senha"                                     
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 15.  AssertionError  Mensagem de sucesso                                               
+                      expected { success: false, …(1) } to have property 'message'      
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Alterar Senha"                                     
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 16.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Logout"                                            
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 17.  AssertionError  Mensagem de logout                                                
+                      expected { success: false, …(1) } to have property 'message'      
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Logout"                                            
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 18.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Logout de Todas as Sessões"                        
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 19.  AssertionError  Mensagem de logout                                                
+                      expected { success: false, …(1) } to have property 'message'      
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Logout de Todas as Sessões"                        
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 20.  AssertionError  Status 200 OK                                                     
+                      expected response to have status code 200 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Listar Sessões"                                    
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 21.  AssertionError  Retorna lista de sessões                                          
+                      expected { success: false, …(1) } to be an array                  
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Listar Sessões"                                    
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 22.  AssertionError  Status 204 No Content                                             
+                      expected response to have status code 204 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Revogar Sessão"                                    
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 23.  AssertionError  Status 201 Created                                                
+                      expected response to have status code 201 but got 429             
+                      at assertion:1 in test-script                                     
+                      inside "Auth / Criar Usuário (Admin)"                             
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 24.  AssertionError  Retorna ID criado                                                 
+                      expected { success: false, …(1) } to have property 'id'           
+                      at assertion:2 in test-script                                     
+                      inside "Auth / Criar Usuário (Admin)"                             
+[90m     [39m[90m                [39m[90m                                                                   [39m
+ 25.  AssertionError  Retorna email cadastrado                                          
+                      expected { success: false, …(1) } to have property 'email'        
+                      at assertion:3 in test-script                                     
+                      inside "Auth / Criar Usuário (Admin)"                             

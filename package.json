@@ -1,0 +1,62 @@
+{
+  "name": "pdv-multitenant-backend",
+  "version": "1.0.0",
+  "description": "Sistema PDV Multitenant Backend",
+  "main": "dist/server.js",
+  "scripts": {
+    "setup": "node setup.js",
+    "setup:db": "node setup-database.js",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "docs": "npm run dev",
+    "docs:open": "start http://localhost:3000/api-docs",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "test:auth": "node test-auth.js",
+    "test:api": "newman run postman/postman-collection.json -e postman/postman-environment.json --reporters cli,html --reporter-html-export newman-report.html"
+  },
+  "keywords": [
+    "pdv",
+    "multitenant",
+    "pos",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.10.5",
+    "@types/uuid": "^9.0.7",
+    "axios": "^1.10.0",
+    "newman": "^6.2.1",
+    "nodemon": "^3.0.2",
+    "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

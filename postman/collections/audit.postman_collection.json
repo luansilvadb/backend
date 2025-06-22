@@ -1,0 +1,175 @@
+{
+  "info": {
+    "name": "Auditoria",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Endpoints de logs e estatísticas de auditoria"
+  },
+  "item": [
+    {
+      "name": "Listar Logs de Auditoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/audit/logs", "host": ["{{baseUrl}}"], "path": ["api", "audit", "logs"] }
+      }
+    },
+    {
+      "name": "Estatísticas de Auditoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/audit/stats", "host": ["{{baseUrl}}"], "path": ["api", "audit", "stats"] }
+      }
+    },
+    {
+      "name": "Exportar Logs de Auditoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/audit/export", "host": ["{{baseUrl}}"], "path": ["api", "audit", "export"] }
+      }
+    },
+    {
+      "name": "Limpar Logs Antigos",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/audit/cleanup", "host": ["{{baseUrl}}"], "path": ["api", "audit", "cleanup"] },
+        "body": { "mode": "raw", "raw": "{\n  \"daysToKeep\": 90\n}" }
+      }
+    }
+  ]
+}

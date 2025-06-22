@@ -1,0 +1,43 @@
+newman
+
+Categorias
+
+→ Criar Categoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 19ms]
+  POST http://localhost:3000/api/categories [429 Too Many Requests, 1.14kB, 3ms]
+
+→ Listar Categorias
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/categories [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Detalhar Categoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/categories/:id [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Atualizar Categoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  PUT http://localhost:3000/api/categories/:id [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Excluir Categoria
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 3ms]
+  DELETE http://localhost:3000/api/categories/:id [429 Too Many Requests, 1.14kB, 2ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              10 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               5 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 127ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 810B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 19ms, s.d.: 5ms] │
+└─────────────────────────────────────────────────────────────┘

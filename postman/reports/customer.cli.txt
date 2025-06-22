@@ -1,0 +1,47 @@
+newman
+
+Clientes
+
+→ Criar Cliente
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 21ms]
+  POST http://localhost:3000/api/customers [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Listar Clientes
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/customers [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Detalhar Cliente
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/customers/:id [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Atualizar Cliente
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  PUT http://localhost:3000/api/customers/:id [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Excluir Cliente
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  DELETE http://localhost:3000/api/customers/:id [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Histórico de Compras do Cliente
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/customers/:id/sales [429 Too Many Requests, 1.14kB, 2ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              12 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               6 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 156ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 972B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 21ms, s.d.: 5ms] │
+└─────────────────────────────────────────────────────────────┘

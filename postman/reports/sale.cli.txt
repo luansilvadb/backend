@@ -1,0 +1,51 @@
+newman
+
+Vendas
+
+→ Criar Venda
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 21ms]
+  POST http://localhost:3000/api/sales [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Listar Vendas
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/sales [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Detalhar Venda
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 3ms]
+  GET http://localhost:3000/api/sales/:id [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Cancelar Venda
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 1ms]
+  PATCH http://localhost:3000/api/sales/:id/cancel [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Estornar Venda
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  PATCH http://localhost:3000/api/sales/:id/refund [429 Too Many Requests, 1.14kB, 1ms]
+
+→ Relatório de Vendas
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/sales/reports [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Top Produtos Vendidos
+  POST http://localhost:3000/api/auth/login [429 Too Many Requests, 1.14kB, 2ms]
+  GET http://localhost:3000/api/sales/reports/top-products [429 Too Many Requests, 1.14kB, 1ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              14 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               7 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 167ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 1.13kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 21ms, s.d.: 4ms] │
+└─────────────────────────────────────────────────────────────┘

@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "Categorias",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Endpoints de gestão de categorias de produtos"
+  },
+  "item": [
+    {
+      "name": "Criar Categoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/categories", "host": ["{{baseUrl}}"], "path": ["api", "categories"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Categoria Teste\",\n  \"description\": \"Descrição da categoria\"\n}" }
+      }
+    },
+    {
+      "name": "Listar Categorias",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/categories", "host": ["{{baseUrl}}"], "path": ["api", "categories"] }
+      }
+    },
+    {
+      "name": "Detalhar Categoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/categories/:id", "host": ["{{baseUrl}}"], "path": ["api", "categories", ":id"] }
+      }
+    },
+    {
+      "name": "Atualizar Categoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/categories/:id", "host": ["{{baseUrl}}"], "path": ["api", "categories", ":id"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Categoria Atualizada\",\n  \"description\": \"Descrição atualizada\"\n}" }
+      }
+    },
+    {
+      "name": "Excluir Categoria",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (!pm.environment.get('token')) {",
+              "  pm.sendRequest({",
+              "    url: pm.environment.get('baseUrl') + '/api/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: {",
+              "      mode: 'raw',",
+              "      raw: JSON.stringify({",
+              "        email: pm.environment.get('email'),",
+              "        password: pm.environment.get('password'),",
+              "        tenantSlug: pm.environment.get('tenantSlug')",
+              "      })",
+              "    }",
+              "  }, function (err, res) {",
+              "    if (!err && res.code === 200) {",
+              "      var data = res.json();",
+              "      pm.environment.set('token', data.token);",
+              "      pm.environment.set('refreshToken', data.refreshToken);",
+              "    }",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/categories/:id", "host": ["{{baseUrl}}"], "path": ["api", "categories", ":id"] }
+      }
+    }
+  ]
+}

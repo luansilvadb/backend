@@ -1,0 +1,41 @@
+{
+  "info": {
+    "name": "Configurações",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Endpoints de configurações da loja e sistema"
+  },
+  "item": [
+    {
+      "name": "Buscar Configurações da Loja",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/settings/store", "host": ["{{baseUrl}}"], "path": ["api", "settings", "store"] }
+      }
+    },
+    {
+      "name": "Atualizar Configurações da Loja",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/settings/store", "host": ["{{baseUrl}}"], "path": ["api", "settings", "store"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"\",\n  \"address\": \"\",\n  \"cnpj\": \"\"\n}" }
+      }
+    },
+    {
+      "name": "Backup Manual do Banco",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{baseUrl}}/api/settings/backup", "host": ["{{baseUrl}}"], "path": ["api", "settings", "backup"] }
+      }
+    },
+    {
+      "name": "Restaurar Backup",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/settings/restore", "host": ["{{baseUrl}}"], "path": ["api", "settings", "restore"] },
+        "body": { "mode": "raw", "raw": "{\n  \"backupFile\": \"backup.sql\"\n}" }
+      }
+    }
+  ]
+}

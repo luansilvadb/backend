@@ -1,0 +1,35 @@
+newman
+
+Configurações
+
+→ Buscar Configurações da Loja
+  GET http://localhost:3000/api/settings/store [429 Too Many Requests, 1.14kB, 20ms]
+
+→ Atualizar Configurações da Loja
+  PUT http://localhost:3000/api/settings/store [429 Too Many Requests, 1.14kB, 3ms]
+
+→ Backup Manual do Banco
+  POST http://localhost:3000/api/settings/backup [429 Too Many Requests, 1.14kB, 2ms]
+
+→ Restaurar Backup
+  POST http://localhost:3000/api/settings/restore [429 Too Many Requests, 1.14kB, 2ms]
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │               4 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │               0 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 67ms                                    │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 324B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 6ms [min: 2ms, max: 20ms, s.d.: 7ms] │
+└─────────────────────────────────────────────────────────────┘

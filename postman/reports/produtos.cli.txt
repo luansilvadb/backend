@@ -1,0 +1,166 @@
+newman
+
+PDV Multitenant API - Produtos
+
+□ Produtos
+└ Listar Produtos
+  GET http://localhost:3000/api/products [429 Too Many Requests, 1.14kB, 19ms]
+  √  Resposta JSON válida
+  1. Status 200 OK
+  2. Retorna lista de produtos
+
+└ Criar Produto
+  POST http://localhost:3000/api/auth/login   POST http://localhost:3000/api/categories [429 Too Many Requests, 1.14kB, 4ms]
+[429 Too Many Requests, 1.14kB, 6ms]
+  POST http://localhost:3000/api/products [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+  3. Status 201 Created
+  4. Retorna ID do produto criado
+
+└ Buscar Produto por ID
+  GET http://localhost:3000/api/products/{{productId}} [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+  5. Status 200 OK
+  6. Retorna produto com ID
+
+└ Buscar Produto por SKU
+  GET http://localhost:3000/api/products/sku/{{sku}} [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+  7. Status 200 OK
+  8. Retorna produto com SKU
+
+└ 
+  GET http://localhost:3000/api/products/barcode/{{barcode}} [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+  9. Status 200 OK
+ 10. Retorna produto com barcode
+
+└ Listar Unidades de Produto
+  GET http://localhost:3000/api/products/units [429 Too Many Requests, 1.14kB, 2ms]
+  √  Resposta JSON válida
+
+└ Listar Produtos com Estoque Baixo
+  GET http://localhost:3000/api/products/low-stock [429 Too Many Requests, 1.14kB, 3ms]
+ 11. Status 200 OK
+ 12. Retorna lista de produtos com estoque baixo
+
+└ Atualizar Produto
+  PUT http://localhost:3000/api/products/{{productId}} [429 Too Many Requests, 1.14kB, 2ms]
+ 13. Status 200 OK
+ 14. Retorna produto atualizado
+
+└ Reativar Produto
+  PATCH http://localhost:3000/api/products/{{productId}}/reactivate [429 Too Many Requests, 1.14kB, 1ms]
+ 15. Status 200 OK
+ 16. Mensagem de sucesso
+
+└ Excluir Produto
+  DELETE http://localhost:3000/api/products/{{productId}} [429 Too Many Requests, 1.14kB, 1ms]
+ 17. Status 204 No Content
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              12 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              10 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              23 │              17 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 209ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 972B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 3ms [min: 1ms, max: 19ms, s.d.: 4ms] │
+└─────────────────────────────────────────────────────────────┘
+
+[31m   # [39m[31m failure        [39m[31m detail                                                       [39m
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 01.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Listar Produtos"                          
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 02.  AssertionError  Retorna lista de produtos                                    
+                      expected { success: false, …(1) } to be an array             
+                      at assertion:2 in test-script                                
+                      inside "Produtos / Listar Produtos"                          
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 03.  AssertionError  Status 201 Created                                           
+                      expected response to have status code 201 but got 429        
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Criar Produto"                            
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 04.  AssertionError  Retorna ID do produto criado                                 
+                      expected { success: false, …(1) } to have property 'id'      
+                      at assertion:2 in test-script                                
+                      inside "Produtos / Criar Produto"                            
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 05.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Buscar Produto por ID"                    
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 06.  AssertionError  Retorna produto com ID                                       
+                      expected { success: false, …(1) } to have property 'id'      
+                      at assertion:2 in test-script                                
+                      inside "Produtos / Buscar Produto por ID"                    
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 07.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Buscar Produto por SKU"                   
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 08.  AssertionError  Retorna produto com SKU                                      
+                      expected { success: false, …(1) } to have property 'sku'     
+                      at assertion:2 in test-script                                
+                      inside "Produtos / Buscar Produto por SKU"                   
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 09.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:1 in test-script                                
+                      inside "Produtos / 31044989-9364-46ea-ad2e-40bfb4984051"     
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 10.  AssertionError  Retorna produto com barcode                                  
+                      expected { success: false, …(1) } to have property 'barcode' 
+                      at assertion:2 in test-script                                
+                      inside "Produtos / 31044989-9364-46ea-ad2e-40bfb4984051"     
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 11.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:0 in test-script                                
+                      inside "Produtos / Listar Produtos com Estoque Baixo"        
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 12.  AssertionError  Retorna lista de produtos com estoque baixo                  
+                      expected { success: false, …(1) } to be an array             
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Listar Produtos com Estoque Baixo"        
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 13.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:0 in test-script                                
+                      inside "Produtos / Atualizar Produto"                        
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 14.  AssertionError  Retorna produto atualizado                                   
+                      expected { success: false, …(1) } to have property 'id'      
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Atualizar Produto"                        
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 15.  AssertionError  Status 200 OK                                                
+                      expected response to have status code 200 but got 429        
+                      at assertion:0 in test-script                                
+                      inside "Produtos / Reativar Produto"                         
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 16.  AssertionError  Mensagem de sucesso                                          
+                      expected { success: false, …(1) } to have property 'message' 
+                      at assertion:1 in test-script                                
+                      inside "Produtos / Reativar Produto"                         
+[90m     [39m[90m                [39m[90m                                                              [39m
+ 17.  AssertionError  Status 204 No Content                                        
+                      expected response to have status code 204 but got 429        
+                      at assertion:0 in test-script                                
+                      inside "Produtos / Excluir Produto"                          
