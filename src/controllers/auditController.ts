@@ -30,7 +30,7 @@ export class AuditController {
       const skip = (Number(page) - 1) * Number(limit);
 
       // Construir filtros
-      const where: any = {
+      const where: { [key: string]: any } = {
         tenantId: req.tenant.id
       };
 
@@ -56,10 +56,10 @@ export class AuditController {
       if (dateFrom || dateTo) {
         where.createdAt = {};
         if (dateFrom) {
-          where.createdAt.gte = new Date(dateFrom as string);
+          (where.createdAt as { [key: string]: any }).gte = new Date(dateFrom as string);
         }
         if (dateTo) {
-          where.createdAt.lte = new Date(dateTo as string);
+          (where.createdAt as { [key: string]: any }).lte = new Date(dateTo as string);
         }
       }
 
@@ -120,17 +120,17 @@ export class AuditController {
       const { dateFrom, dateTo } = req.query;
 
       // Filtros de data
-      const dateFilter: any = {
+      const dateFilter: { [key: string]: any } = {
         tenantId: req.tenant.id
       };
 
       if (dateFrom || dateTo) {
         dateFilter.createdAt = {};
         if (dateFrom) {
-          dateFilter.createdAt.gte = new Date(dateFrom as string);
+          (dateFilter.createdAt as { [key: string]: any }).gte = new Date(dateFrom as string);
         }
         if (dateTo) {
-          dateFilter.createdAt.lte = new Date(dateTo as string);
+          (dateFilter.createdAt as { [key: string]: any }).lte = new Date(dateTo as string);
         }
       }
 
@@ -271,17 +271,17 @@ export class AuditController {
 
       const { dateFrom, dateTo, format = 'json' } = req.query;
 
-      const where: any = {
+      const where: { [key: string]: any } = {
         tenantId: req.tenant.id
       };
 
       if (dateFrom || dateTo) {
         where.createdAt = {};
         if (dateFrom) {
-          where.createdAt.gte = new Date(dateFrom as string);
+          (where.createdAt as { [key: string]: any }).gte = new Date(dateFrom as string);
         }
         if (dateTo) {
-          where.createdAt.lte = new Date(dateTo as string);
+          (where.createdAt as { [key: string]: any }).lte = new Date(dateTo as string);
         }
       }
 

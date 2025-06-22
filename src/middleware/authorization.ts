@@ -104,7 +104,7 @@ class AuditLogger {
     ipAddress: string,
     userAgent: string,
     success: boolean = true,
-    details?: any
+    details?: Record<string, unknown>
   ) {
     try {
       await prisma.auditLog.create({
@@ -134,7 +134,7 @@ class AuditLogger {
     reportType: string,
     ipAddress: string,
     userAgent: string,
-    filters?: any
+    filters?: Record<string, unknown>
   ) {
     try {
       await prisma.auditLog.create({
@@ -150,7 +150,7 @@ class AuditLogger {
           success: true,
           details: {
             reportType,
-            filters,
+            filters: filters ? JSON.parse(JSON.stringify(filters)) : {},
             generatedAt: new Date().toISOString()
           }
         }
@@ -170,7 +170,7 @@ class AuditLogger {
     ipAddress: string,
     userAgent: string,
     success: boolean,
-    details?: any
+    details?: Record<string, unknown>
   ) {
     try {
       await prisma.auditLog.create({

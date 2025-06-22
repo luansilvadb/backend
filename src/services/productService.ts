@@ -85,7 +85,7 @@ export class ProductService {
 
     const skip = (page - 1) * limit;
 
-    const where: any = {
+    const where: Record<string, unknown> = {
       tenantId
     };
 
@@ -360,8 +360,13 @@ export class ProductService {
     });
 
     // Filtrar produtos com estoque baixo
-    const lowStockProducts = products.filter((product: any) => 
-      product.inventory && product.inventory[0] && product.inventory[0].quantity <= product.inventory[0].minStock
+    const lowStockProducts = products.filter(
+      (product) =>
+        Array.isArray(product.inventory) &&
+        product.inventory[0] &&
+        typeof product.inventory[0].quantity === 'number' &&
+        typeof product.inventory[0].minStock === 'number' &&
+        product.inventory[0].quantity <= product.inventory[0].minStock
     );
 
     return lowStockProducts;

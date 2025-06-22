@@ -1,6 +1,5 @@
 import prisma from '../config/database';
 import { CreateSaleData, PaginationParams } from '../types';
-import { Prisma } from '@prisma/client';
 
 export class SaleService {
   static async createSale(data: CreateSaleData, userId: string, tenantId: string) {
@@ -46,7 +45,7 @@ export class SaleService {
 
     const skip = (page - 1) * limit;
 
-    const where: any = {
+    const where: Record<string, unknown> = {
       tenantId
     };
 
@@ -111,7 +110,13 @@ export class SaleService {
     return sale;
   }
 
-  static async refundSale(id: string, items: any[], reason: string, tenantId: string, userId: string) {
+  static async refundSale(
+    id: string,
+    items: Array<{ productId: string; quantity: number; unitPrice: number }>,
+    reason: string,
+    tenantId: string,
+    userId: string
+  ) {
     // Exemplo simplificado: ajuste conforme sua lógica real
     // Aqui você pode implementar lógica de estorno parcial
     const sale = await prisma.sale.findFirst({

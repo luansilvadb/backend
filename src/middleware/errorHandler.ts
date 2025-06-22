@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const errorHandler = (
-  error: any,
+  error: unknown,
   req: Request,
   res: Response,
   next: NextFunction
@@ -10,7 +10,7 @@ export const errorHandler = (
   console.error('Error:', error);
 
   // Prisma errors
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+  if (error instanceof PrismaClientKnownRequestError) {
     switch (error.code) {
       case 'P2002':
         return res.status(409).json({
@@ -38,23 +38,23 @@ export const errorHandler = (
   }
 
   // Validation errors
-  if (error.name === 'ValidationError') {
+  if (typeof error === 'object' && error !== null && 'name' in error && (error as any).name === 'ValidationError') {
     return res.status(400).json({
       success: false,
       error: 'Dados inválidos',
-      details: error.message
+      details: (error as any).message
     });
   }
 
   // JWT errors
-  if (error.name === 'JsonWebTokenError') {
+  if (typeof error === 'object' && error !== null && 'name' in error && (error as any).name === 'JsonWebTokenError') {
     return res.status(401).json({
       success: false,
       error: 'Token inválido'
     });
   }
 
-  if (error.name === 'TokenExpiredError') {
+  if (typeof error === 'object' && error !== null && 'name' in error && (error as any).name === 'TokenExpiredError') {
     return res.status(401).json({
       success: false,
       error: 'Token expirado'
@@ -65,7 +65,9 @@ export const errorHandler = (
   return res.status(500).json({
     success: false,
     error: 'Erro interno do servidor',
-    details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    details: process.env.NODE_ENV === 'development' && typeof error === 'object' && error !== null && 'message' in error
+      ? (error as any).message
+      : undefined
   });
 };
 
