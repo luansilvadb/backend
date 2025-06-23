@@ -75,6 +75,7 @@ export class HealthController {
    *                   format: date-time
    */
   static async healthCheck(req: Request, res: Response) {
+    // log removido para não poluir o console
     const startTime = Date.now();
     
     try {

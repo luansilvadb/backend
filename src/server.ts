@@ -7,7 +7,8 @@ import swaggerSpec from "./config/swagger";
 
 // Middlewares e rotas customizadas
 import routes from "./routes"; // descomente se houver arquivo de rotas
-import { errorHandler } from "./middleware/errorHandler"; // descomente se houver
+import { errorHandler, notFound } from "./middleware/errorHandler"; // descomente se houver
+import { HealthController } from "./controllers/healthController";
 
 const app = express();
 
@@ -37,12 +38,20 @@ app.use(
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes); // descomente se houver arquivo de rotas
 
+app.get('/', HealthController.healthCheck);
+
+// Middleware para rotas não encontradas
+app.use(notFound);
+
 // Handler de erro global (descomente se houver)
 app.use(errorHandler);
 
 // Inicialização do servidor
 const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-  console.log(`📚 Swagger documentation available at: http://localhost:${PORT}/api-docs`);
+  console.log("\n========================================");
+  console.log(`🚀  Servidor rodando na porta ${PORT}`);
+  console.log(`📚  Swagger documentation available at: http://localhost:${PORT}/api-docs`);
+  console.log(`💚  Health check disponível em: http://localhost:${PORT}/`);
+  console.log("========================================\n");
 });
