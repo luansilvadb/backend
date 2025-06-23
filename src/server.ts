@@ -13,14 +13,23 @@ const app = express();
 
 // Middlewares essenciais
 app.use(express.json());
-app.use(cors());
+
+// PATCH: Permitir CORS para o domínio do Swagger UI e API
+app.use(cors({
+  origin: [
+    "https://api.pdv.luansilva.com.br",
+    "https://api.pdv.luansilva.com.br/api-docs"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 // PATCH: Content Security Policy para permitir chamadas do Swagger UI para a API externa
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", "https://api.pdvmultitenant.com"],
+      connectSrc: ["'self'", "https://api.pdv.luansilva.com.br"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
