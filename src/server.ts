@@ -6,7 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger";
 
 // Middlewares e rotas customizadas
-// import routes from "./routes"; // descomente se houver arquivo de rotas
+import routes from "./routes"; // descomente se houver arquivo de rotas
 // import errorHandler from "./middleware/errorHandler"; // descomente se houver
 
 const app = express();
@@ -42,7 +42,7 @@ app.use(
 
 // Rotas principais
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// app.use("/api", routes); // descomente se houver arquivo de rotas
+app.use("/api", routes); // descomente se houver arquivo de rotas
 
 // Handler de erro global (descomente se houver)
 // app.use(errorHandler);

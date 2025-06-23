@@ -13,13 +13,14 @@ const options = {
     },
     servers: [
       {
-        url: 'https://api.pdv.luansilva.com.br',
-        description: 'Servidor de Produção'
+        url: 'http://localhost:3000/',
+        description: 'Servidor de Desenvolvimento'
       },
       {
-        url: 'http://localhost:3000',
-        description: 'Servidor de Desenvolvimento'
-      }
+        url: 'https://api.pdv.luansilva.com.br/',
+        description: 'Servidor de Produção'
+      },
+      
     ],
     components: {
       securitySchemes: {
