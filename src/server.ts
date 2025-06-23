@@ -7,7 +7,7 @@ import swaggerSpec from "./config/swagger";
 
 // Middlewares e rotas customizadas
 import routes from "./routes"; // descomente se houver arquivo de rotas
-// import errorHandler from "./middleware/errorHandler"; // descomente se houver
+import { errorHandler } from "./middleware/errorHandler"; // descomente se houver
 
 const app = express();
 
@@ -38,7 +38,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes); // descomente se houver arquivo de rotas
 
 // Handler de erro global (descomente se houver)
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // Inicialização do servidor
 const PORT = Number(process.env.PORT) || 3000;
