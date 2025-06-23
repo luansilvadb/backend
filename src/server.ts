@@ -14,15 +14,8 @@ const app = express();
 // Middlewares essenciais
 app.use(express.json());
 
-// PATCH: Permitir CORS para o domínio do Swagger UI e API
-app.use(cors({
-  origin: [
-    "https://api.pdv.luansilva.com.br",
-    "https://api.pdv.luansilva.com.br/api-docs"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// PATCH: Permitir CORS para qualquer origem temporariamente
+app.use(cors());
 
 // PATCH: Content Security Policy para permitir chamadas do Swagger UI para a API externa
 app.use(
