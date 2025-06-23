@@ -6,9 +6,9 @@
   "scripts": {
     "setup": "node setup.js",
     "setup:db": "node setup-database.js",
-    "dev": "nodemon src/server.ts",
+    "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "docs": "npm run dev",
     "docs:open": "start http://localhost:3000/api-docs",
     "docker:up": "docker-compose up -d",
@@ -57,6 +57,7 @@
     "nodemon": "^3.0.2",
     "prisma": "^4.16.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "cross-env": "^7.0.3"
   }
 }
